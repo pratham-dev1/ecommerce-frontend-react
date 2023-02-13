@@ -3,7 +3,7 @@ import history from "../components/UnsavedChangesBlocker/History";
 
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://my-shop-s7tj.onrender.com",
   headers: {
     "Content-Type": "application/json",
   }
