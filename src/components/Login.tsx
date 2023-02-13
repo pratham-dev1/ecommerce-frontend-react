@@ -1,15 +1,17 @@
-import { Button, TextField } from "@mui/material";
-import React from "react";
+import {Button, TextField } from "@mui/material";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../apiService/axiosInstance";
 import { setToken } from "../redux/slices/authSlice";
+import Loader from "./Loader";
 
 const Login = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+  const [loader,setLoader] = useState(false)
 
   const {
     register,
@@ -20,6 +22,7 @@ const Login = () => {
   //console.log(errors);
 
   const onLogin = (data: any) => {
+    setLoader(true)
     axiosClient
       .post("/login", { email: data.email, password: data.password })
       .then((result) => {
@@ -32,6 +35,7 @@ const Login = () => {
           localStorage.setItem("refreshToken", result.data.refreshToken);
           dispatch(setToken(result.data.token));
         }
+        setLoader(false)
       });
 
     // navigate('/home')
@@ -90,6 +94,7 @@ const Login = () => {
       </form>
       <Link style={{marginLeft:"auto",marginRight:10,marginTop:5}} to="/forgot-password" >Forgot Password</Link>
       <div style={{marginTop:10}}>Don't have an Account ? <Link to="/signup" >Singup</Link></div>
+      {loader && <Loader/>}
     </div>
   );
 };
