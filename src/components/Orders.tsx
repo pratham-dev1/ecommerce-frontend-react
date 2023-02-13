@@ -2,11 +2,14 @@ import { Divider, Pagination } from "@mui/material";
 import React, { useState } from "react";
 import axiosClient from "../apiService/axiosInstance";
 import { saveAs } from 'file-saver';
+import Loader from "./Loader";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [page,setPage] = useState(1)
   const [totalPages,setTotalPages] = useState(0)
+  const [loader,setLoader] = useState(false)
+
 
   React.useEffect(() => {
     getOrders();
@@ -15,13 +18,16 @@ const Orders = () => {
   let query = `page=${page}`
 
   const getOrders = async () => {
+    setLoader(true)
     let response = await axiosClient.get("/shop/getOrders?"+query)
     console.log(response);
     response?.data && setOrders(response.data?.result);
     response?.data && setTotalPages(response.data?.totalPages);
+    setLoader(false)
   };
 
   const createAndDownloadPdf = async(orderId:any)=>{
+    setLoader(true)
     let createPdf = await axiosClient.post("/shop/create-invoice-pdf",{orderId:orderId})
     console.log(createPdf)
     let getPdf = await axiosClient.get(`/shop/fetch-invoice-pdf/${orderId}`)
@@ -32,6 +38,7 @@ const Orders = () => {
     downloadLink.href = linkSource;
     downloadLink.download = fileName;
     downloadLink.click()
+    setLoader(false)
   }
 
   return (
@@ -61,6 +68,7 @@ const Orders = () => {
           <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
          <Pagination count={totalPages} onChange={(e,v)=>setPage(v)}  color="primary" />      
       </div>
+      {loader && <Loader/>}    
     </div>
   );
 };

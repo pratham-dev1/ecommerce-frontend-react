@@ -12,6 +12,7 @@ import SingleSize from "./SingleSize";
 import Pagination from '@mui/material/Pagination';
 import { useNavigate } from "react-router-dom";
 import useDebounce from "./useDebounce";
+import Loader from "./Loader";
 
 const Home = () => {
   const navigate = useNavigate()
@@ -22,6 +23,8 @@ const Home = () => {
   const [search,setSearch] = useState("")
   const [pageNo,setPageNo] = useState(1)
   const [totalPages,setTotalPages] = useState(0)
+  const [loader,setLoader] = useState(false)
+
 
   const reduxState = useSelector((state : RootState)=>state.cart)
   
@@ -38,9 +41,11 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
 
   const getData = async () => {
     try{
+      setLoader(true)
     let response = await axiosClient.get("/shop/list-products?"+query);
     setData(response.data.result);
     setTotalPages(response.data.totalPages)
+    setLoader(false)
     // console.log(response.data.message)
     }
     catch(err:any){
@@ -48,6 +53,8 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
       if(err?.response?.status === 500){
       // navigate("/error")
       }
+    setLoader(false)
+
     }
   };
 
@@ -99,7 +106,8 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
         })}
 
       </div>
-      <Pagination count={totalPages} onChange={(e,page)=>setPageNo(page)} color="primary" />      
+      <Pagination count={totalPages} onChange={(e,page)=>setPageNo(page)} color="primary" />  
+      {loader && <Loader/>}    
     </div>
   );
 };
