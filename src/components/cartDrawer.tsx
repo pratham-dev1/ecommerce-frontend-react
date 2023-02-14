@@ -23,6 +23,7 @@ import CartItems from "./CartItems";
 
 export default function CartDrawer() {
   const [state, setState] = React.useState(false);
+  const [loader,setLoader] = React.useState(false)
 
   const dispatch = useDispatch()
 
@@ -39,6 +40,7 @@ export default function CartDrawer() {
   );
 
   const handleOrder = () => {
+    setLoader(true)
     axiosClient.post("/shop/add-order", {
       products: Items.map((item:any)=>({...item, orderStatus: "pending"})),
       totalPrice: totalPrice,
@@ -46,7 +48,10 @@ export default function CartDrawer() {
       
     }).then(response => {
       //console.log(response)
+      setState(false)
+      setLoader(false)
       dispatch(emptyCart({}))
+      
     })
    
   };
