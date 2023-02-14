@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axiosClient from "../../apiService/axiosInstance";
+import axiosClient, { SERVER_URL } from "../../apiService/axiosInstance";
 
 export default function DataTable({
   data,
@@ -111,7 +111,7 @@ export default function DataTable({
       renderCell : (params)=> {
         // console.log(params)
         return(
-        <img src={params.row.image} height="40" width="40"/>
+        <img src={`${SERVER_URL}/public/uploads/${params.row.image}`} height="40" width="40"/>
         )
       }
     },

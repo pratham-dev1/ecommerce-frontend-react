@@ -4,12 +4,14 @@ import React,{startTransition} from 'react'
 const Search = ({setSearch}:any) => {
   return (
     <>
-    <h4 style={{marginLeft:16,marginTop:16,marginBottom:0}}>Search</h4>
+    <h4 style={{marginLeft:16,marginTop:16,marginBottom:20}}>Search</h4>
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
     <TextField onChange={(e)=>{
         startTransition(()=>{               // it will not hang the input field
             setSearch(e.target.value)
         })
-        }} style={{marginLeft:16,marginTop:16}} className="price" id="outlined-basic" label="Search by Title" variant="outlined" size="small" />
+        }} className="price"  id="outlined-basic" label="Search by Title" variant="outlined" size="small" />
+        </div>
     </>
   )
 }

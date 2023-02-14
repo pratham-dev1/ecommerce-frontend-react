@@ -13,6 +13,17 @@ import CartDrawer from "./cartDrawer";
 import jwt_decode from "jwt-decode";
 import SessionExpiredDialog from "./SessionExpiredDialog";
 import axiosClient from "../apiService/axiosInstance";
+import Box from "@mui/material/Box";
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from "@mui/material/Drawer";
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Loader from "./Loader";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { setSearchValue } from "../redux/slices/cartSlice";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -61,39 +72,130 @@ const Layout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  const [state, setState] = React.useState(false);
+  const [loader,setLoader] = useState(false)
+
+
 
   let user:any =  localStorage.getItem("token") && jwt_decode(localStorage.getItem("token") as string);
   console.log(user)
 
   const logout = async() => {
+    setLoader(true)
     const result = await axiosClient.post('/logout',{id: user?._id})
     if(result.status === 200){
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
     dispatch(removeToken(null));
+    setLoader(false)
     }
     else{
+      setLoader(false)
       alert(result.data.message)
     }
   };
 
   return (
-    <>
+    
+    <Box >
       <div
         style={{
           backgroundColor: "#047BD5",
           height: 55,
           display: "flex",
           alignItems: "center",
+          width: "100%",
+          // minWidth: '990px',
+          position: 'fixed',
+          left: 0,
+          top:0,
+          zIndex:100, 
+         
         }}
       >
-        <img
-          src="/test2.jpg"
-          width="100"
-          height="35"
-          style={{ marginLeft: 10 }}
-        />
+         <div className="menuIcon">
+         <MenuIcon  sx={{color:"#fff",marginLeft:1}} onClick={()=>setState(!state)} />
+      <Drawer anchor={"left"}  open={state} onClose={() => setState(false)}>
+        <Box className="drawer-width" role="presentation" >
+          <h3 style={{textAlign:"center"}}>Hi {user && user?.name.charAt(0).toUpperCase() + user?.name.slice(1)} &#x1F600;</h3>
+        <Divider/>
+        <div style={{marginLeft:20}}>
+        
+       
         <NavLink
+        onClick={()=>setState(!state)}
+          to="/home"
+          style={({ isActive }) =>
+            isActive
+              ? {
+                  color: "red",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                }
+              : {
+                  color: "#000",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }
+          }
+        >
+         <p style={{marginBottom:20}}> <WidgetsIcon style={{marginBottom:-6,marginRight:5}}/> Products</p>      
+        </NavLink>
+
+
+        <NavLink
+        onClick={()=>setState(!state)}
+          to="/orders"
+          style={({ isActive }) =>
+            isActive
+              ? {
+                  color: "red",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                }
+              : {
+                  color: "#000",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }
+          }
+        >
+           <p style={{marginBottom:20}}> <LocalMallIcon style={{marginBottom:-6,marginRight:5}}/> Orders</p> 
+        </NavLink>
+
+        { user?.role?.includes('admin') &&
+        <NavLink
+        onClick={()=>setState(!state)}
+          to="/admin"
+          style={({ isActive }) =>
+            isActive
+              ? {
+                  color: "red",
+                  textDecoration: "none",
+                  fontWeight: "600",
+                }
+              : {
+                  color: "#000",
+                  fontWeight: "600",
+                  textDecoration: "none",
+                }
+          }
+        >
+           <p style={{marginBottom:20}}> <AdminPanelSettingsIcon style={{marginBottom:-6,marginRight:5}}/> Admin</p> 
+          
+        </NavLink>
+        
+}
+<Divider/>
+<p onClick={logout} style={{fontWeight:600}}> <LogoutIcon style={{marginLeft:3,marginBottom:-6,marginRight:5}}/> Logout</p>
+</div>
+        </Box>
+      </Drawer>
+    </div>
+       
+       
+        <NavLink
+        className="hide-items-header"
           to="/home"
           style={({ isActive }) =>
             isActive
@@ -127,6 +229,7 @@ const Layout = () => {
 
 
         <NavLink
+        className="hide-items-header"
           to="/orders"
           style={({ isActive }) =>
             isActive
@@ -158,6 +261,7 @@ const Layout = () => {
 
         { user?.role?.includes('admin') &&
         <NavLink
+        className="hide-items-header"
           to="/admin"
           style={({ isActive }) =>
             isActive
@@ -188,9 +292,10 @@ const Layout = () => {
         </NavLink>
 }
 
+
        
 
-        {/* <Search style={{ color: "#ffffff", marginLeft: "auto" }}>
+        <Search style={{ color: "#ffffff",marginLeft:8,marginRight:5 }}>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -201,15 +306,18 @@ const Layout = () => {
               dispatch(setSearchValue(e.target.value));
             }}
           />
-        </Search> */}
+        </Search>
 
-        <div style={{ marginLeft: "auto", marginRight: 20 ,display:"flex"}}>
+        <div style={{marginLeft:"auto",marginRight: 20 ,display:"flex",width:"100wh"}}>
+          <NotificationsIcon sx={{color:"#fff",marginRight:1.5}}/>
+          {/* <AccountCircleIcon sx={{color:"#fff",marginRight:1.5}}/> */}
           <CartDrawer/>
-          <button style={{ marginLeft: 20 }} onClick={logout}>
+          <button className="hide-items-header" style={{ marginLeft: 20 }} onClick={logout}>
             Logout
           </button>
         </div>
         <h4
+        className="hide-items-header"
           style={{
             color: "#ffffff",
             border: "0.5px solid white",
@@ -220,8 +328,13 @@ const Layout = () => {
           {user && user?.name.charAt(0).toUpperCase() + user?.name.slice(1)}
         </h4>
       </div>
+      
+      <div style={{marginLeft:10,marginRight:10,marginTop:60}}>
       <Outlet />
-    </>
+      </div>
+      {loader && <Loader/>}
+      </Box>
+    
   );
 };
 

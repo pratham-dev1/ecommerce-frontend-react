@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: InitialState = {
   orders : {},
+  search : ""
 };
 
 export const cartSlice = createSlice({
@@ -10,6 +11,7 @@ export const cartSlice = createSlice({
   initialState: initialState,
   reducers: {
     addOrder : (state, action: PayloadAction<any>)=>{
+      console.log(action.payload)
       //console.log(action)
       // state.orders[action.payload.id] = action.payload           ese bhi kr skte h
       return {
@@ -50,12 +52,15 @@ export const cartSlice = createSlice({
    
     emptyCart : (state, action: PayloadAction<any>)=>{
       state.orders = {}
+    },
+    setSearchValue : (state,action:PayloadAction<any>)=>{
+state.search = action.payload
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {  addOrder,removeOrder , emptyCart } =
+export const {  addOrder,removeOrder , emptyCart,setSearchValue } =
   cartSlice.actions;
 // You must export the reducer as follows for it to be able to be read by the store.
 export default cartSlice.reducer;

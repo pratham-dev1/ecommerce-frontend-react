@@ -1,9 +1,10 @@
 import axios from "axios";
 import history from "../components/UnsavedChangesBlocker/History";
-
+export const SERVER_URL = 'https://my-shop-s7tj.onrender.com'
 
 const axiosClient = axios.create({
   baseURL: "https://my-shop-s7tj.onrender.com",
+  // baseURL:"http://localhost:5000/",
   headers: {
     "Content-Type": "application/json",
     

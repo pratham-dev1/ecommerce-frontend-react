@@ -4,34 +4,48 @@
 
 .display {
   display:flex;
-  justify-content:center;
-  width:100%
+  width:100%;
 }
 
 .price {
   width:280px;
-  margin-top:17px;
-  margin-left:16px;
-  margin-bottom: 30px;
+ margin-left: 10px;
 }
 
 .size {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   border-radius: 50px;
-  border: 1px solid #047BD5;
+  border: 1.5px solid #047BD5;
   margin:6px;
   display:flex;
   justify-content:center;
   align-items:center;
   font-weight:600;
   cursor: pointer;
+  font-size: 14px;
+}
+
+.disabled-size {
+  height: 40px;
+  width: 40px;
+  border-radius: 50px;
+  border: 1px solid silver;
+  margin:6px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:600;
+  cursor: pointer;
+  font-size: 14px;
+  color:silver
 }
 
 .selected-size {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
   border-radius: 50px;
+  border: 1.5px solid #047BD5;
   margin:6px;
   display:flex;
   justify-content:center;
@@ -40,10 +54,28 @@
   color:#ffffff;
   background-color: #047BD5;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .ml-16 {
   margin-left: 16px;
+}
+
+
+.card-section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.drawer-width {
+  width:350px
+}
+
+.menuIcon {
+  display: none;
 }
 
 @media screen and (max-width: 550px) {
@@ -53,9 +85,24 @@
   .display{
     flex-direction: column;
     align-items: center;
+    justify-content:center;
   }
   .price {
     width:270px;
     margin-left:0
+  }
+  .card-section{
+    justify-content: center;
+  }
+  .drawer-width{
+    width:250px
+  }
+
+  .menuIcon{
+    display: block;
+  }
+
+  .hide-items-header {
+    display: none;
   }
 }

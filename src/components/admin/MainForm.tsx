@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
-import axiosClient from "../../apiService/axiosInstance"
+import axiosClient, { SERVER_URL } from "../../apiService/axiosInstance"
 const MainForm = () => {
   const { id }: any = useParams();
   const [dataById, setDataById] = useState<any>({});
@@ -20,7 +20,7 @@ const navigate = useNavigate()
     reset,
   } = useForm({
     defaultValues: {
-      size: "",
+      size: [],
       name: "",
       price: "",
       description:"",
@@ -32,7 +32,7 @@ const navigate = useNavigate()
   //console.log(errors);
 
   const onSubmit = async (data: any) => {
-    console.log(data)
+    console.log(data.size)
     try{
       //console.log(data);
       let formData = new FormData();
@@ -79,7 +79,7 @@ const navigate = useNavigate()
     if (id !== "new") {
       let response = await axiosClient.get(`/admin/getProductById/${id}`);
       // console.log(response)
-      reset(response.data);
+      reset({...response.data , size:response.data.size.split(',')});
       setImage(response.data.image)
     }
   };
@@ -158,6 +158,7 @@ const navigate = useNavigate()
               return (
                 <Autocomplete
                   options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"]}
+                  multiple
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -255,7 +256,7 @@ const navigate = useNavigate()
                 />
               ) : (
                 <img
-                  src={Image}
+                  src={`${SERVER_URL}/public/uploads/${Image}`}
                   height="40"
                   width="40"
                   style={{ marginLeft: 5 }}

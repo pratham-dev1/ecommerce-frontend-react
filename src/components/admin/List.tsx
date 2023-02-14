@@ -8,7 +8,7 @@ const List = () => {
   const [queryOptions, setQueryOptions] = useState<any>({
     sort:{_id:"desc"},
     search:null,
-    page:{pageNo:0 , pageSize : 2}
+    page:{pageNo:0 , pageSize : 5}
   });
   const [data, setData] = useState<any[]>([]);
   const [count , setCount] = useState<number>(0)

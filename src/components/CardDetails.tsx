@@ -8,26 +8,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addOrder, removeOrder } from "../redux/slices/cartSlice";
+import { SERVER_URL } from "../apiService/axiosInstance";
 
 interface Props {
   item: any;
 }
 
 const CardDetails: React.FC<Props> = ({ item}) => {
-  const [quantity, setQuantity] = useState(0);
   let navigate = useNavigate()
   const dispatch = useDispatch()
 
   return (
     <Card sx={{ margin: 2,border:"0.5px solid silver" }} className="card" >
       <CardActionArea>
-        <CardMedia component="img" height="130" image={item.url} />
-        <CardContent sx={{ height: 210 }} onClick={()=>navigate(`/productdetail/${item._id}`)}>
+        <CardMedia component="img" height="130" image={`${SERVER_URL}/public/uploads/${item.image}`} />
+        <CardContent sx={{ height: 210 }} >
           <Typography gutterBottom variant="h5" component="div">
             Product Id : {item._id}
           </Typography>
           <Typography variant="body2" >
-            Description : {item.description.length > 42 ? item.description.slice(0,42)+'...' : item.description}
+            Description : {item.description.length > 10 ? item.description.slice(0,10)+'...' : item.description}
           </Typography>
 
           <Typography variant="body2" >
@@ -43,58 +43,10 @@ const CardDetails: React.FC<Props> = ({ item}) => {
         </CardContent>
         <div style={{ display: "flex", justifyContent: "center" }}>
             <div style={{ bottom: 0, position: "absolute", marginBottom: 7 }} >
-              {quantity === 0 ? (
-                <Button variant="contained" style={{ width: 190 }} onClick={()=>{
-                  setQuantity(quantity+1)
-                  dispatch(addOrder({...item,quantity : quantity+1}))
-                }}>
-                  Add to cart
+                <Button variant="contained" style={{width:"200px"}} onClick={()=>navigate(`/productdetail/${item._id}`)}>
+                  Check now
                 </Button>
-              ) : (
-                <div style={{ display: "flex" }}>
-                  <div
-                    style={{
-                      borderRadius: 50,
-                      backgroundColor: "#047BD5",
-                      fontSize: 28,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "#fff",
-                      height: 35,
-                      width: 35,
-                      marginRight: 30,
-                    }}
-                    onClick={()=>{
-                      setQuantity(quantity-1)
-                      dispatch(removeOrder({...item,quantity : quantity-1}))
-                    }}
-                  >
-                    -
-                  </div>
-                  <div style={{ fontSize: 22, marginTop: 5 }}>{quantity}</div>
-                  <div
-                    style={{
-                      borderRadius: 50,
-                      backgroundColor: "#047BD5",
-                      fontSize: 26,
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      color: "#fff",
-                      height: 35,
-                      width: 35,
-                      marginLeft: 30,
-                    }}
-                    onClick={()=>{
-                      setQuantity(quantity+1)
-                      dispatch(addOrder({...item,quantity : quantity+1}))
-                    }}
-                  >
-                    +
-                  </div>
-                </div>
-              )}
+             
             </div>
           </div>
       </CardActionArea>

@@ -6,6 +6,7 @@ const Price = ({setPriceFilter}:any) => {
 return (
     <>
     <h4 className="ml-16">Price Filter</h4>
+    <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
     <Autocomplete
     size="small"
     className="price"
@@ -20,6 +21,7 @@ return (
       setPriceFilter(v.value) 
     }}
   />
+  </div>
   </>
   )
 }

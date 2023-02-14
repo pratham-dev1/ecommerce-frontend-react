@@ -17,6 +17,7 @@ import { Badge } from "@mui/material";
 import axiosClient from "../apiService/axiosInstance";
 import jwt_decode from "jwt-decode";
 import { emptyCart } from "../redux/slices/cartSlice";
+import CartItems from "./CartItems";
 
 
 
@@ -50,24 +51,16 @@ export default function CartDrawer() {
    
   };
 
+
   const List = () => (
-    <Box sx={{ width: 350 }} role="presentation">
+    <Box className="drawer-width" role="presentation">
       <h4 style={{ textAlign: "center", marginTop: 10 }}>
         Cart({totalItems.length})
       </h4>
       <Divider />
       {Items.map((item: any) => {
         return (
-          <>
-            <div>Name : {item.name}</div>
-            <div>Size : {item.size}</div>
-            <div>Qty : {item.quantity}</div>
-            <div>
-              Price : {item.price} X {item.quantity} ={" "}
-              {item.price * item.quantity}
-            </div>
-            <Divider />
-          </>
+         <CartItems item={item}/>
         );
       })}
       {Items.length > 0 ? (
@@ -113,7 +106,7 @@ export default function CartDrawer() {
         badgeContent={totalItems.length}
         color="error"
       >
-        <ShoppingCartIcon style={{ color: "#f1f2f6" }} />
+        <ShoppingCartIcon style={{ color: "#f1f2f6",marginRight:-3 }} />
       </Badge>
       <Drawer anchor={"right"} open={state} onClose={() => setState(false)}>
         <List />

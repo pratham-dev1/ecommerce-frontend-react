@@ -30,14 +30,14 @@ const Home = () => {
   
   let Sizes = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
-  const debouncedSearchTerm = useDebounce(search, 500);
+  const debouncedSearchTerm = useDebounce(reduxState?.search, 300);
 
   useEffect(() => {
     getData();
   }, [priceFilter,singleSize,debouncedSearchTerm,multipleSize,pageNo]);
 
 
-let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&multipleSize=${multipleSize}&page=${pageNo}`
+let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${reduxState?.search}&multipleSize=${multipleSize}&page=${pageNo}`
 
   const getData = async () => {
     try{
@@ -61,10 +61,12 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
   return (
     <div className="display">
       <div>
-      <Search setSearch={setSearch} />
+        <div style={{display:"flex",justifyContent:"center",flexDirection:"column"}}>
+      {/* <Search setSearch={setSearch} /> */}
         <Price setPriceFilter={setPriceFilter} />
+        </div>
 
-        <Divider style={{ marginLeft: 16 }} />
+        
         <h4 className="ml-16">Single select</h4>
         <SingleSize
           sizes={Sizes}
@@ -80,7 +82,7 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
             flexWrap: "wrap",
             justifyContent: "center",
             width: "280px",
-            marginLeft: "16px",
+            alignItems:"center"
           }}
         >
           {Sizes.map((item, index) => (
@@ -88,14 +90,10 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
           ))}
         </div>
       </div>
+      
+      <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>
       <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "center",
-          width: "100%",
-        }}
+        className="card-section"
       >
         {data.map((item, index) => {
           return (
@@ -106,7 +104,8 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${search}&mu
         })}
 
       </div>
-      <Pagination count={totalPages} onChange={(e,page)=>setPageNo(page)} color="primary" />  
+      <Pagination count={totalPages} onChange={(e,page)=>setPageNo(page)} color="primary" style={{padding:20,margin:"auto"}} />  
+      </div>
       {loader && <Loader/>}    
     </div>
   );

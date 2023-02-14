@@ -11,7 +11,7 @@ const SingleSize: React.FC<Props> = ({ sizes,setSingleSize,singleSize }) => {
         flexWrap: "wrap",
         justifyContent: "center",
         width: "280px",
-        marginLeft: "16px",
+        alignItems:"center"
       }}
     >
       {sizes.map((size, index) => {
