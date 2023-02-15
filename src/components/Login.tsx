@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../apiService/axiosInstance";
 import { setToken } from "../redux/slices/authSlice";
 import Loader from "./Loader";
+import {toast } from 'react-toastify';
+
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -27,15 +29,19 @@ const Login = () => {
       .post("/login", { email: data.email, password: data.password })
       .then((result) => {
         if (result.data.error) {
-          alert(result.data.error);
+          setLoader(false)
+          return toast.error(result.data.error)
           //console.log(result)
+          
         } else {
-          console.log(result)
+         
           localStorage.setItem("token", result.data.token);
           localStorage.setItem("refreshToken", result.data.refreshToken);
           dispatch(setToken(result.data.token));
+          setLoader(false)
+          return toast.success("Logged In successfully")
         }
-        setLoader(false)
+       
       });
 
     // navigate('/home')
@@ -93,7 +99,7 @@ const Login = () => {
         </Button>
       </form>
       <Link style={{marginLeft:"auto",marginRight:10,marginTop:5}} to="/forgot-password" >Forgot Password</Link>
-      <div style={{marginTop:10}}>Don't have an Account ? <Link to="/signup" >Singup</Link></div>
+      <div style={{marginTop:10}}>Don't have an Account ? <Link to="/signup" >Signup</Link></div>
       {loader && <Loader/>}
     </div>
   );

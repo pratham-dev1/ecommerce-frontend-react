@@ -18,9 +18,8 @@ const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState<any[]>([]);
   const [priceFilter, setPriceFilter] = useState<any>("");
-  const [singleSize, setSingleSize] = useState<string>("");
-  const [multipleSize, setMultipleSize] = useState<string[]>([]);
-  const [search,setSearch] = useState("")
+  // const [singleSize, setSingleSize] = useState<string>("");
+  // const [multipleSize, setMultipleSize] = useState<string[]>([]);
   const [pageNo,setPageNo] = useState(1)
   const [totalPages,setTotalPages] = useState(0)
   const [loader,setLoader] = useState(false)
@@ -34,10 +33,16 @@ const Home = () => {
 
   useEffect(() => {
     getData();
-  }, [priceFilter,singleSize,debouncedSearchTerm,multipleSize,pageNo]);
+  }, [
+    priceFilter,
+    // singleSize,
+    debouncedSearchTerm,
+    // multipleSize,
+    pageNo
+  ]);
 
 
-let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${reduxState?.search}&multipleSize=${multipleSize}&page=${pageNo}`
+let query = `sortPrice=${priceFilter}&searchText=${reduxState?.search}&page=${pageNo}`
 
   const getData = async () => {
     try{
@@ -67,7 +72,7 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${reduxState
         </div>
 
         
-        <h4 className="ml-16">Single select</h4>
+        {/* <h4 className="ml-16">Single select</h4>
         <SingleSize
           sizes={Sizes}
           singleSize={singleSize}
@@ -88,7 +93,7 @@ let query = `size=${singleSize}&sortPrice=${priceFilter}&searchText=${reduxState
           {Sizes.map((item, index) => (
             <MultipleSize item={item} setMultipleSize={setMultipleSize} multipleSize={multipleSize} />
           ))}
-        </div>
+        </div> */}
       </div>
       
       <div style={{display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"}}>

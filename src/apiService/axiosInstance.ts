@@ -4,7 +4,7 @@ export const SERVER_URL = 'https://my-shop-s7tj.onrender.com'
 
 const axiosClient = axios.create({
   baseURL: "https://my-shop-s7tj.onrender.com",
-  // baseURL:"http://localhost:5000/",
+  // baseURL:"http://192.168.1.4:5000/",
   headers: {
     "Content-Type": "application/json",
     

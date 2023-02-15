@@ -56,8 +56,8 @@ const Orders = () => {
                   <div>Quantity : {product.products.quantity}</div>
                   <div>Price : {product.products.price} x {product.products.quantity} = { product.products.price*product.products.quantity}</div>
                   <div>Status : <span style={product.products.orderStatus ==="pending" ? {backgroundColor:"red",borderRadius:50,paddingInline:10,color:"#fff"  }:{backgroundColor:"green",borderRadius:50,paddingInline:10,color:"#fff" } }>{product.products.orderStatus}</span></div>
-                  <div>Address : {product.user.address.address}</div>
-                  <div>Pincode : {product.user.address.pincode}</div>
+                  <div>Address : {product.user.addressDetails.address}</div>
+                  <div>Pincode : {product.user.addressDetails.pincode}</div>
                   <Divider style={{margin:5}}/>
                 </div>
               );
@@ -66,7 +66,8 @@ const Orders = () => {
             {/* <div style={{height:3,backgroundColor:"black"}}></div> */}
           </div>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-         <Pagination count={totalPages} onChange={(e,v)=>setPage(v)}  color="primary" />      
+        {orders.length > 0 && <Pagination count={totalPages} onChange={(e,v)=>setPage(v)}  color="primary" />    }  
+        {orders.length === 0 && <h2>No orders found</h2>}
       </div>
       {loader && <Loader/>}    
     </div>

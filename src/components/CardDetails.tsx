@@ -21,22 +21,17 @@ const CardDetails: React.FC<Props> = ({ item}) => {
   return (
     <Card sx={{ margin: 2,border:"0.5px solid silver" }} className="card" >
       <CardActionArea>
-        <CardMedia component="img" height="130" image={`${SERVER_URL}/public/uploads/${item.image}`} />
-        <CardContent sx={{ height: 210 }} >
-          <Typography gutterBottom variant="h5" component="div">
-            Product Id : {item._id}
-          </Typography>
-          <Typography variant="body2" >
-            Description : {item.description.length > 10 ? item.description.slice(0,10)+'...' : item.description}
-          </Typography>
+        <CardMedia component="img" height="220" image={`${SERVER_URL}/public/uploads/${item.image}`} />
+        <CardContent sx={{ height: 120 }} >
+          <h3 style={{marginTop:-10}}>
+          {item.name}
+          </h3>
+         
 
-          <Typography variant="body2" >
-            Name : {item.name}
-          </Typography>
-
-          <div style={{ bottom: 0, position: "absolute", marginBottom: 40 }}>
-            <h3>₹ {item.price}</h3>
-            <h3>{item.size}</h3>
+          <div style={{ bottom: 0,position: "absolute", marginBottom: 40 }}>
+          <h3 style={{color:"green"}}>In stock</h3>
+            <h3 style={{marginTop:-4}}>₹ {item.price}</h3>
+            
           </div>
 
           

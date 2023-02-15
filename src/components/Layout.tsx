@@ -311,7 +311,7 @@ const Layout = () => {
         <div style={{marginLeft:"auto",marginRight: 20 ,display:"flex",width:"100wh"}}>
           <NotificationsIcon sx={{color:"#fff",marginRight:1.5}}/>
           {/* <AccountCircleIcon sx={{color:"#fff",marginRight:1.5}}/> */}
-          <CartDrawer/>
+           <CartDrawer/>
           <button className="hide-items-header" style={{ marginLeft: 20 }} onClick={logout}>
             Logout
           </button>

@@ -29,6 +29,10 @@ import ResetPasswordAdmin from "./components/admin/ResetPasswordAdmin";
 import UpdatePasswordAdmin from "./components/admin/UpdatePasswordAdmin";
 import ServerError from "./components/500";
 import MultipleImages from "./components/MultipleImages";
+import Checkout from "./components/checkout/Checkout";
+import { ToastContainer } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -82,6 +86,8 @@ if(decoded?.exp * 1000 < Date.now()) {
               <Route path="/productdetail/:id" element={<ProtectedRoute user={isAuthenticated}> <ProductDetail/> </ProtectedRoute>}/>
               <Route path="/orders" element={<ProtectedRoute user={isAuthenticated}> <Orders/> </ProtectedRoute>}/>
               <Route path="/upload-images" element={<ProtectedRoute user={isAuthenticated}> <MultipleImages/> </ProtectedRoute>} />
+              <Route path="/checkout" element={<ProtectedRoute user={isAuthenticated}> <Checkout/> </ProtectedRoute>} />
+            
             </Route>
 
             <Route path="/" element={isAuthenticated ? <Navigate to="/home"/> : <Login/>} />
@@ -106,6 +112,7 @@ if(decoded?.exp * 1000 < Date.now()) {
             <Route path="/update-password-admin/:key" element={isAdmin ? <Navigate to="/admin-home"/> : <UpdatePasswordAdmin/> } />
             
       </Routes>
+      <ToastContainer autoClose={3000} closeOnClick position="top-right" theme="colored" />
       </>
     }
     </>

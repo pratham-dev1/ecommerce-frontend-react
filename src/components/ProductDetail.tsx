@@ -1,8 +1,9 @@
 import { Button, Divider } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import axiosClient, { SERVER_URL } from "../apiService/axiosInstance";
+import { RootState } from "../redux/reducer";
 import { addOrder, removeOrder } from "../redux/slices/cartSlice";
 import Loader from "./Loader";
 import SingleSize from "./SingleSize";
@@ -12,6 +13,12 @@ const ProductDetail = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  const reduxState = useSelector((state: RootState) => state);
+
+
+  
+
   let { id } = useParams();
   const [data, setData] = useState<any>({});
   const [loader,setLoader] = useState(false)
@@ -19,14 +26,26 @@ const ProductDetail = () => {
   const [addedToCart, setAddedToCart] = useState(false);
   const [message,setMessage] = useState('')
 
+  useEffect(()=>{
+    let isEmpty = Object.keys(reduxState.cart.orders).length === 0
+if(isEmpty){
+  setAddedToCart(false)
+}
+  },[reduxState.cart.orders])
 
   const dispatch = useDispatch()
 
   const getData = async () => {
+    try{
     setLoader(true)
     let response = await axiosClient.get(`/shop/getProductById/${id}`);
     setLoader(false)
     setData(response.data);
+    }
+    catch (err){
+      setLoader(false)
+      console.log(err)
+    }
   };
 //console.log(data)
   return (
@@ -49,6 +68,7 @@ const ProductDetail = () => {
             onClick={() => {
               if(data?.size.split(',').includes(item)){
               setSize(size === item ? "" : item);
+              setAddedToCart(false)
               setMessage('')
               }
               

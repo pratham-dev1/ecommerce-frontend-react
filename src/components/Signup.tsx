@@ -1,15 +1,17 @@
 import { Button, TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../apiService/axiosInstance";
 import { setToken } from "../redux/slices/authSlice";
+import Loader from "./Loader";
 
 const SignUp = () => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
+const [loader,setLoader] = useState(false)
 
   const {
     register,
@@ -20,14 +22,16 @@ const SignUp = () => {
   console.log(errors);
 
   const onSignup = (data: any) => {
+    setLoader(true)
     axiosClient
       .post("/signup", { email: data.email, password: data.password,name:data.name,address:data.address,pincode:data.pincode,image:"testImage"  })
       .then((result) => {
         if (result.data.error) {
           alert(result.data.message)
-          
+          setLoader(false)
         } else {
           //console.log(result);
+          setLoader(false)
           navigate('/')
         }
       });
@@ -111,6 +115,8 @@ const SignUp = () => {
           Signup
         </Button>
       </form>
+      <div style={{marginTop:10}}>Already have an Account ? <Link to="/login" >Login</Link></div>
+      {loader && <Loader/>}
     </div>
   );
 };

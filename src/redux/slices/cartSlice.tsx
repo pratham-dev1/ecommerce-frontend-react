@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
         ...state,
         orders:{
           ...state.orders,
-          [action.payload._id] : action.payload
+          [action.payload._id + action.payload.size] : action.payload      //by this we can order multiple size for same order
         }
       } 
     },
@@ -32,13 +32,13 @@ export const cartSlice = createSlice({
       ...state,
       orders:{
         ...state.orders,
-        [action.payload._id] :  action.payload 
+        [action.payload._id + action.payload.size] :  action.payload 
       }
 
     }
   }
   else {
-    let {[action.payload._id] :id , ...rest}  = state.orders
+    let {[action.payload._id + action.payload.size] :id , ...rest}  = state.orders
      return{
       ...state,
       orders:{

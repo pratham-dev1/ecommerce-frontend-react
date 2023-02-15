@@ -1,6 +1,7 @@
 import { Divider } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { SERVER_URL } from '../apiService/axiosInstance'
 import { addOrder, removeOrder } from '../redux/slices/cartSlice'
 
 const CartItems = ({item}:any) => {
@@ -8,15 +9,20 @@ const CartItems = ({item}:any) => {
 
   return (
          <>
-         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-            <div>
-            <div>Name : {item.name}</div>
-            <div>Size : {item.size}</div>
+         <div style={{display:"flex",alignItems:"center",fontSize:14}}>
+            <div style={{display:"flex"}}>
+              <div>
+              <img src={`${SERVER_URL}/public/uploads/${item.image}`} height="70"  width='50' style={{marginRight:3}} />
+              </div>
+              <div>
+            <div style={{marginBottom:4}}>{item.name}</div>
+            <div style={{marginBottom:4}}>Size : {item.size}</div>
             
-                <div>Qty : {item.quantity}</div>
-            <div>
+                <div style={{marginBottom:4}}>Qty : {item.quantity}</div>
+            <div style={{marginBottom:4}}>
               Price : {item.price} X {item.quantity} ={" "}
               {item.price * item.quantity}
+            </div>
             </div>
             </div>
             <div>
@@ -64,7 +70,7 @@ const CartItems = ({item}:any) => {
                   </div>
                 </div>
                 </div>
-            <Divider />
+            <Divider  style={{marginBottom:6}}/>
             </>
           
   )
