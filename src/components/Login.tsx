@@ -105,7 +105,8 @@ const Login = () => {
       </form>
       </div> 
       <Link style={{marginLeft:"auto",marginRight:10,marginTop:15,fontSize:13.5,color:"purple"}} to="/forgot-password" >Forgot Password</Link>
-      <div style={{marginTop:20,color:"purple"}}>Don't have an Account ? <Link to="/signup" >Signup</Link></div>
+      <div style={{marginTop:20}}>Don't have an Account ? <Link style={{color:"purple"}} to="/signup" >Signup</Link></div>
+      <small style={{marginTop:15,color:"silver"}}>Copyright @Developer.Pratham</small>
       {loader && <Loader/>}
     </div>
 
