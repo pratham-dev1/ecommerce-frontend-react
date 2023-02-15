@@ -60,8 +60,6 @@ const Login = () => {
         width: 260,
       }}
     >
-      <div>pratham@gmail.com</div>
-      <div>1234</div>
       <form onSubmit={handleSubmit(onLogin)}>
         <TextField
           label="Email"
