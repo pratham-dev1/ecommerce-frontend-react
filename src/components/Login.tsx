@@ -38,6 +38,7 @@ const Login = () => {
           localStorage.setItem("token", result.data.token);
           localStorage.setItem("refreshToken", result.data.refreshToken);
           dispatch(setToken(result.data.token));
+          navigate("/home",{replace:true})
           setLoader(false)
           return toast.success("Logged In successfully")
         }

@@ -90,7 +90,7 @@ if(decoded?.exp * 1000 < Date.now()) {
             
             </Route>
 
-            <Route path="/" element={isAuthenticated ? <Navigate to="/home"/> : <Login/>} />
+            <Route path="/" element={isAuthenticated ? <Navigate to="/home" replace/> : <Login/>} />
             <Route path="/signup" element={isAuthenticated ? <Navigate to="/home"/> : <SignUp/>} />
             <Route path="/forgot-password" element={isAuthenticated ? <Navigate to="/home"/> : <ResetPassword/>} />
             <Route path="/update-password" element={isAuthenticated ? <Navigate to="/home"/> : <UpdatePassword/> } />
