@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 .card {
   width : 220px;
 }
