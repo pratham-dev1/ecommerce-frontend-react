@@ -48,20 +48,26 @@ const Login = () => {
     // navigate('/home')
   };
   return (
+    
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        margin: "auto",
-        marginTop: 40,
+        margin:"auto",
+        marginTop: 80,
         boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
         padding: 18,
         width: 260,
+        borderRadius:50
       }}
     >
+     <div>
       <form onSubmit={handleSubmit(onLogin)}>
+        <div style={{display:"flex",justifyContent:"center",marginTop:-18,marginBottom:-8,position:"relative"}}>
+        <img src="shop-logo.jpg"style={{height:120,width:140}}  />
+        </div>
         <TextField
           label="Email"
           variant="outlined"
@@ -97,10 +103,12 @@ const Login = () => {
           Login
         </Button>
       </form>
-      <Link style={{marginLeft:"auto",marginRight:10,marginTop:5}} to="/forgot-password" >Forgot Password</Link>
-      <div style={{marginTop:10}}>Don't have an Account ? <Link to="/signup" >Signup</Link></div>
+      </div> 
+      <Link style={{marginLeft:"auto",marginRight:10,marginTop:15,fontSize:13.5,color:"purple"}} to="/forgot-password" >Forgot Password</Link>
+      <div style={{marginTop:20,color:"purple"}}>Don't have an Account ? <Link to="/signup" >Signup</Link></div>
       {loader && <Loader/>}
     </div>
+
   );
 };
 

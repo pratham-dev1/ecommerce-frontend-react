@@ -112,7 +112,7 @@ if(decoded?.exp * 1000 < Date.now()) {
             <Route path="/update-password-admin/:key" element={isAdmin ? <Navigate to="/admin-home"/> : <UpdatePasswordAdmin/> } />
             
       </Routes>
-      <ToastContainer autoClose={3000} closeOnClick position="top-right" theme="colored" />
+      <ToastContainer autoClose={3000} closeOnClick position="top-right" theme="colored"/>
       </>
     }
     </>
