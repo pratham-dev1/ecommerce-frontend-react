@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axiosClient from "../apiService/axiosInstance";
 import { saveAs } from 'file-saver';
 import Loader from "./Loader";
+import { toast } from "react-toastify";
 
 const Orders = () => {
   const [orders, setOrders] = useState<any>(null);
@@ -18,12 +19,18 @@ const Orders = () => {
   let query = `page=${page}`
 
   const getOrders = async () => {
+    try {
     setLoader(true)
     let response = await axiosClient.get("/shop/getOrders?"+query)
     console.log(response);
     response?.data && setOrders(response.data?.result);
     response?.data && setTotalPages(response.data?.totalPages);
     setLoader(false)
+    }
+    catch(err:any){
+      setLoader(false)
+    toast.error(err)
+    }
   };
 
   const createAndDownloadPdf = async(orderId:any)=>{
