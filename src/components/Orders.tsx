@@ -5,7 +5,7 @@ import { saveAs } from 'file-saver';
 import Loader from "./Loader";
 
 const Orders = () => {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState<any>(null);
   const [page,setPage] = useState(1)
   const [totalPages,setTotalPages] = useState(0)
   const [loader,setLoader] = useState(false)
@@ -47,7 +47,7 @@ const Orders = () => {
       <Divider />
      
           <div style={{ padding:10}}>
-            {orders.map((product: any,index) => {
+            {orders?.map((product: any,index:any) => {
               return (
                 <div key={index}>
                     <b>OrderId : {product._id} - <span onClick={()=>createAndDownloadPdf(product._id)} style={{color:"blue",cursor:"pointer"}}>Invoice</span></b>
@@ -66,8 +66,8 @@ const Orders = () => {
             {/* <div style={{height:3,backgroundColor:"black"}}></div> */}
           </div>
           <div style={{display:"flex",justifyContent:"center",alignItems:"center"}}>
-        {orders.length > 0 && <Pagination count={totalPages} onChange={(e,v)=>setPage(v)}  color="primary" />    }  
-        {orders.length === 0 && <h2>No orders found</h2>}
+        {orders && <Pagination count={totalPages} onChange={(e,v)=>setPage(v)}  color="primary" />    }  
+        {!loader && !orders && <h2>No orders found</h2>}
       </div>
       {loader && <Loader/>}    
     </div>
