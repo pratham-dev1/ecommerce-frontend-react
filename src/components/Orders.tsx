@@ -34,6 +34,7 @@ const Orders = () => {
   };
 
   const createAndDownloadPdf = async(orderId:any)=>{
+    try{
     setLoader(true)
     let createPdf = await axiosClient.post("/shop/create-invoice-pdf",{orderId:orderId})
     console.log(createPdf)
@@ -41,6 +42,12 @@ const Orders = () => {
    const pdfBlob = new Blob([getPdf.data], { type: 'application/pdf' });
    saveAs(pdfBlob, 'Invoice.pdf')
     setLoader(false)
+    toast.success("Invoice downloaded")
+    }
+    catch(err){
+setLoader(false)
+toast.error('Failed to download invoice, Something went wrong')
+    }
   }
 
   return (
