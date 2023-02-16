@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import axiosClient from "../apiService/axiosInstance";
 import { setToken } from "../redux/slices/authSlice";
 import Loader from "./Loader";
@@ -27,10 +28,10 @@ const [loader,setLoader] = useState(false)
       .post("/signup", { email: data.email, password: data.password,name:data.name,address:data.address,pincode:data.pincode,image:"testImage"  })
       .then((result) => {
         if (result.data.error) {
-          alert(result.data.message)
+          toast.error(result.data.message)
           setLoader(false)
         } else {
-          //console.log(result);
+          toast.success(`Registration successfull , Please login ${data.name}`)
           setLoader(false)
           navigate('/')
         }
