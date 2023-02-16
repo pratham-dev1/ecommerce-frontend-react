@@ -30,14 +30,9 @@ const Orders = () => {
     setLoader(true)
     let createPdf = await axiosClient.post("/shop/create-invoice-pdf",{orderId:orderId})
     console.log(createPdf)
-    let getPdf = await axiosClient.get(`/shop/fetch-invoice-pdf/${orderId}`)
-  //  console.log(getPdf.data)
-    const linkSource = `data:application/pdf;base64,${getPdf.data}`;
-    const downloadLink = document.createElement("a");
-    const fileName = "Invoice.pdf";
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click()
+    let getPdf = await axiosClient.get(`/shop/fetch-invoice-pdf/${orderId}`,{ responseType: 'blob' })
+   const pdfBlob = new Blob([getPdf.data], { type: 'application/pdf' });
+   saveAs(pdfBlob, 'Invoice.pdf')
     setLoader(false)
   }
 
